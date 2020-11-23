@@ -8,9 +8,13 @@ command_list = ['book slot','view calendar','help','switch','off','create slot']
 status = ' '
 statuses = ['student','volunteer']
 
+t = os.getcwd().split("/")
+t = t[1:]
+# print(t)
 
 def get_users_home_dir():
-    f = open('.config/wtc/config.yml')
+    # os.chdir("/goinfre")
+    f = open(f'/{t[0]}/{t[1]}/.config/wtc/config.yml')
     a = f.readlines()
     key, val = a[4].split(':', 1)
     user = val.split("@")[0]
@@ -50,7 +54,7 @@ def handle_command(status_,command_list):
 
 
 def get_email(user_name,user):
-    print(user)
+    # print(user)
     if user_name == '':
         os.chdir(f'/goinfre/{user.strip()}/.config/wtc')
         f = open('config.yml')
@@ -87,25 +91,9 @@ def save_to_config_file(campus, email,user):
     if not os.path.exists('.config.yml'):
         os.mknod(".config.yml")
 
-    f = open('.config.yml', 'w')
+    f = open('.config.yml', 'a')
     f.write(f'\nEmail: {email}\nCampus: {campus}\nSystem: {sys.platform}')
     f.close()
-
-
-def virtual_environment(user):
-    os.chdir(f'/goinfre/{user.strip()}/group_project')
-
-    if not os.path.exists('code_clinics'):
-        os.system('python3 -m venv code_clinics')
-
-    # os.system('. code_clinics/bin/activate')
-
-    os.system('pip3 install google-api-python-client -q')
-
-    os.system('pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib -q')
-
-    os.path.join("/goinfre/user/group_project", "credentials.json")
-    # os.system('cp $file .')
 
 
 def get_status_of_operator(statuses):
@@ -143,9 +131,7 @@ def start_code_clinics():
 
     save_to_config_file(campus, email, user)
 
-    os.system(f'sh /goinfre/{user.strip()}/Group_16_code_clinic_booking_system/setup.sh')
-
-    # virtual_environment(user)
+    os.system(f'/goinfre/{user.strip()}/Group_16_code_clinic_booking_system/./setup.sh')
 
     status = get_status_of_operator(statuses)
     
@@ -153,6 +139,7 @@ def start_code_clinics():
 
     while True:
 
+        os.chdir(f'/goinfre/{user.strip()}/group_project')
 
         command = handle_command(status_,command_list)
 

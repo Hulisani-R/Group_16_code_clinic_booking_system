@@ -10,7 +10,7 @@ calendar_file=view_calender.py
 book_slot=update_event.py
 
 
-cd $BUILD_PATH
+cd ~/$BUILD_PATH
 
 if [ -d "$VENV" ] 
 then
@@ -39,25 +39,25 @@ fi
 
 if [[ -f "$filename" && -f "start.py" && -f "$book_slot" && -f "$calendar_file" ]] 
 then
-    echo "Files exists." 
+    echo  
 else
-    echo "Error: $filename does not exists."
-    echo "Fetching $filename"
+    echo 
+    echo 
     cd ; cd Group_16_code_clinic_booking_system
     cp $filename ~/$BUILD_PATH
     cp $calendar_file ~/$BUILD_PATH
     cp $book_slot ~/$BUILD_PATH
     cp start.py ~/$BUILD_PATH
-    echo "Fetched files"
+    cp ~/setup.py ~/$BUILD_PATH
     cd ; cd $BUILD_PATH
 fi
 
+pkg='google-auth-oauthli'
+
 if pip search $pkg --quiet
 then
-    echo "$pkg installed"
+    echo 
 else
-    echo "$pkg NOT installed"
     pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib --quiet
-    echo done
 fi
 clear
